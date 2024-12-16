@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load django_bootstrap5 %}
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remover Funcionário</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h2>Funcionário: {{ object.nome }}</h2>
+        <ul>
+            <li><strong>Data de Nascimento:</strong> {{ object.data_nascimento|date:"d/m/Y" }}</li>
+            <li><strong>E-mail:</strong> {{ object.email }}</li>
+            <li><strong>Profissão:</strong> {{ object.profissao }}</li>
+        </ul>
+
+        <!-- Botão para chamar a modal de confirmação -->
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+            Remover Funcionário
+        </button>
+
+        <!-- Modal de Confirmação -->
+        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteModalLabel">Tem certeza que deseja remover o funcionário?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Essa ação não pode ser desfeita.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Botão para cancelar a remoção -->
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                        <!-- Formulário de exclusão -->
+                        <form method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Sim, remover</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botão para voltar -->
+        <button type="button" class="btn btn-success mt-2" onClick="history.go(-1)">Voltar</button>
+    </div>
+
+    {% bootstrap_javascript %}
+</body>
+
+</html>
